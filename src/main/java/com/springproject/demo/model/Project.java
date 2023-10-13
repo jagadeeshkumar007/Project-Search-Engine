@@ -9,7 +9,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="project")
+@Table(name="project1")
 public class Project {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class Project {
 	@Column(name="abstractdocsize")
 	private long abstractdocsize;
 	@Lob
-	@Column(name="abstractdoc",columnDefinition = "MEDIUMBLOB")
+	@Column(name="abstractdoc")
 	private byte[] abstractdoc;
 	public long getId() {
 		return id;
