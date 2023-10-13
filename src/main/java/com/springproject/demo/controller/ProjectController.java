@@ -33,6 +33,12 @@ public class ProjectController {
 	{
 		return "land";
 	}
+	@RequestMapping("/insert")
+	public ModelAndView retInsert() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("home");
+		return mv;
+	}
 	@RequestMapping("/insertdata")
 	public ModelAndView insertdata(HttpServletRequest req,@RequestParam("file") MultipartFile file) throws IOException
 	{
