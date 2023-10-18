@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.springproject.demo.model.AdminLogin;
 import com.springproject.demo.model.Project;
+import com.springproject.demo.repo.AdminRepo;
 import com.springproject.demo.service.ProjectService;
 
 import jakarta.servlet.ServletOutputStream;
@@ -28,15 +30,38 @@ public class ProjectController {
 	@Autowired
 	private ProjectService service;
 	
+	@Autowired
+	private AdminRepo adrepo;
+	
+	private int login=0;
+	
 	@RequestMapping("/")
 	public String home()
 	{
 		return "land";
 	}
-	@RequestMapping("/insert")
-	public ModelAndView retInsert() {
+	@RequestMapping("/login")
+	public String login()
+	{
+		return "login";
+	}
+	@RequestMapping("/logout")
+	public String logout(HttpServletResponse response)
+	{
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //Http 1.1
+		login=0;
+		return "land";
+	}
+	@RequestMapping("/validate")
+	public ModelAndView retInsert(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("home");
+		AdminLogin ad = adrepo.findByUserid(req.getParameter("userid"));
+		if(ad!=null && ad.getPassword().equals(req.getParameter("pass"))) {
+			mv.setViewName("home");
+			login=1;
+		}
+		else
+			mv.setViewName("login");
 		return mv;
 	}
 	@RequestMapping("/insertdata")
@@ -81,10 +106,17 @@ public class ProjectController {
 				}
                 for (String word : words) {
                 	String w1 = word.toUpperCase();
-                    if (set.contains(w1)) {
-                        found = true;
-                        break;
-                    }
+                    for(String i:s) {
+                    	if(i.length()>w1.length() && ((i.toUpperCase()).indexOf(w1)!=-1)) {
+                    		found=true;
+                    		break;
+                    	}else {
+                    		if(w1.indexOf(i.toUpperCase())!=-1) {
+                    			found=true;
+                        		break;
+                    		}
+                    	}
+                    }	
                 }
                 
                 if (found) {
