@@ -83,13 +83,13 @@ public class ProjectController {
 	public ModelAndView result(HttpServletRequest req)
 	{
 		ModelAndView mv = new ModelAndView();
-		List<Project> listofrecords = service.getAllRecords();
+		
 		List<Project> relatedLists = new ArrayList<>();
 		String searchword = req.getParameter("search");
 		String filter = req.getParameter("filter");
         if(searchword!=null) {
         String[] s = searchword.split("\\s+");
-
+        List<Project> listofrecords = service.getAllRecords();
         for (Project list : listofrecords) {
             	boolean found = false;
 				String[] words = list.getTitle().split("\\s+");
