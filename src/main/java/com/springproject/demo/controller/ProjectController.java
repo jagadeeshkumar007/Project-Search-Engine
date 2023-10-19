@@ -83,10 +83,6 @@ public class ProjectController {
 	public ModelAndView result(HttpServletRequest req)
 	{
 		ModelAndView mv = new ModelAndView();
-<<<<<<< HEAD
-		
-=======
->>>>>>> refs/remotes/origin/main
 		List<Project> relatedLists = new ArrayList<>();
 		String searchword = req.getParameter("search");
 		String filter = req.getParameter("filter");
