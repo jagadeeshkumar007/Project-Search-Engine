@@ -45,6 +45,11 @@ public class ProjectController {
 	{
 		return "login";
 	}
+	@RequestMapping("/contactus")
+	public String contactus()
+	{
+		return "cont";
+	}
 	@RequestMapping("/logout")
 	public String logout(HttpServletResponse response)
 	{
