@@ -50,6 +50,11 @@ public class ProjectController {
 	{
 		return "cont";
 	}
+	@RequestMapping("/aboutus")
+	public String aboutus()
+	{
+		return "about";
+	}
 	@RequestMapping("/logout")
 	public String logout(HttpServletResponse response)
 	{
