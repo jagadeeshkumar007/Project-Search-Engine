@@ -96,9 +96,13 @@ public class ProjectController {
 		List<Project> relatedLists = new ArrayList<>();
 		String searchword = req.getParameter("search");
 		String filter = req.getParameter("filter");
-        if(searchword!=null) {
+		
+		if(searchword!=null) {
         String[] s = searchword.split("\\s+");
         List<Project> listofrecords = service.getAllRecords();
+        if(searchword.equals("*"))
+			relatedLists = listofrecords;
+        else {
         for (Project list : listofrecords) {
             	boolean found = false;
 				String[] words = list.getTitle().split("\\s+");
@@ -113,7 +117,13 @@ public class ProjectController {
                 for (String word : words) {
                 	String w1 = word.toUpperCase();
                     for(String i:s) {
-                    	if(i.length()>w1.length() && ((i.toUpperCase()).indexOf(w1)!=-1)) {
+                    	if(filter.equals("Batch") || filter.equals("Guide")) {
+                    		if(i.equalsIgnoreCase(word)) {
+                    		found=true;
+                    		break;
+                    		}
+                    	}
+                    	else if(i.length()>w1.length() && ((i.toUpperCase()).indexOf(w1)!=-1)) {
                     		found=true;
                     		break;
                     	}else {
@@ -129,6 +139,7 @@ public class ProjectController {
                     relatedLists.add(list);
                 }
             }
+        }
         }
 
 		mv.addObject("listofrecords",relatedLists);
